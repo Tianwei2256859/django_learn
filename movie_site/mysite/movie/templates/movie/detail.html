@@ -1,0 +1,41 @@
+<!DOCTYPE html >
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>电影详情页</title>
+    <link href="{% static 'movie/css/detail.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap4/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap4/css/bootstrap-grid.min.css' %}" rel="stylesheet">
+
+    <script src="{% static 'jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap4/js/bootstrap.pop.js' %}"></script>
+    <script src="{% static 'bootstrap4/js/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+{% include 'movie/nav.html' %}
+{% for movie in movie_detail %}
+<div class = 'total_place' >
+	<h4><b>{{movie.title}}&nbsp;({{release_date}})</h4></b>
+	<div class= 'place_one'>
+	<img src='{{img_url}}' width="135" height="201">
+		<div class = 'place'>
+			<h6>导演:&nbsp;{{movie.director}}</h6>
+			<h6>编剧:&nbsp;{{movie.screenwriter}}</h6>
+			<h6 class='hidden'>主演:&nbsp;{{movie.actors}}</h6>
+			<h6>类型:&nbsp;{{movie.types}}</h6>
+			<h6>制片国家/地区:&nbsp;{{movie.regions}}</h6>
+			<h6>上映日期:&nbsp;{{movie.initialreleasedate}}</h6>
+			<h6>片长:&nbsp;{{movie.runtime}}</h6>
+			<h6>电影评分:&nbsp;{{movie.score}}</h6>
+			<h5 id='title_info'>{{title_info}}的剧情简介......</h5>
+			<h6 id='related_info'>{{movie.related_info}}</h6>
+			
+		</div>
+	</div>
+</div>
+{% endfor %}
+</body>
+
+</html>

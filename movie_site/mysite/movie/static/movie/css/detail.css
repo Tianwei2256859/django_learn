@@ -1,0 +1,32 @@
+.hidden{
+    width: 600px;
+	word-wrap: break-word;
+}
+.place{
+	position:relative;
+	top: -205px;
+	left: 150px;
+}
+.place_one{
+	position:relative;
+	top: 10px;
+}
+.total_place{
+	position:fixed;
+	left:300px;
+	top: 65px;
+}
+#title_info{
+	position:relative;
+	left: -150px;
+	top: 5px;
+	color: #36bb2c;
+}
+#related_info{
+	position:relative;
+	left: -150px;
+	top: 5px;
+	width: 750px;
+	word-wrap: break-word;
+	text-indent: 2em;
+}

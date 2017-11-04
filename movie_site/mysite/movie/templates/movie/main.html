@@ -1,0 +1,179 @@
+{% load pagination_tags %}
+<main role="main">
+ <style type="text/css">
+    #filter
+        {
+    width:800px;
+    height:auto;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:18px;
+        }
+        
+    #filter dl
+        {
+    padding:0;
+    margin-top:0;
+    margin-bottom:0;
+    clear:both;
+     padding:4px 0;        
+        }
+        
+    #filter dt,dd 
+        {
+    display:block;
+    float:left;
+    width:auto;
+    padding:0;
+    margin:2px 0;                   
+        } 
+        
+    #filter dt
+        {
+    height:14px;
+    padding-bottom:4px;
+    font-weight:bold;
+    color:#333333;          
+        }
+        
+    #filter dd
+        {
+    color:#333333;
+    margin-right:10px;
+        }
+        
+    #filter a
+        {
+    cursor:pointer;
+        } /*鼠标移到此处时设置成手的样式*/
+        
+    .seling
+        {
+    background-color:#a3d005;
+    color:#FFFFFF;
+        }
+        
+    .seled
+        {
+    background-color:#a3d005;
+    color:#FFFFFF;
+        }
+    </style>
+<div class="jumbotron">
+    <div class="container" >
+        <h3 class="display-5"><b>选影视</b></h3>
+        <div id="filter">
+            <dl id="select1">
+                <dt>电影类型：</dt>
+                <dd class="select-all selected"><a href="#">全部类型</a></dd>
+                <dd><a href="#">剧情</a></dd>
+                <dd><a href="#">爱情</a></dd>
+                <dd><a href="#">喜剧</a></dd>
+                <dd><a href="#">动作</a></dd>
+                <dd><a href="#">科幻</a></dd>
+                <dd><a href="#">悬疑</a></dd>
+                <dd><a href="#">犯罪</a></dd>
+                <dd><a href="#">恐怖</a></dd>
+                <dd><a href="#">青春</a></dd>
+                <dd><a href="#">励志</a></dd>
+                <dd><a href="#">文艺</a></dd>
+                <dd><a href="#">情色</a></dd>
+                <dd><a href="#">暴力</a></dd>
+                <dd><a href="#">传记</a></dd>
+                <dd><a href="#">家庭</a></dd>
+                <dd><a href="#">音乐</a></dd>
+                <dd><a href="#">战争</a></dd>
+                <dd><a href="#">黑色幽默</a></dd>
+                <dd id="key1"></dd>
+                <dd id="result"></dd>
+                <dd id="types">{{types}}</dd>
+            </dl>
+            <dl id="select2">
+                <dt>电影地区：</dt>
+                <dd class="select-all selected"><a href="#">全部地区</a></dd>
+                <dd><a href="#">大陆</a></dd>
+                <dd><a href="#">美国</a></dd>
+                <dd><a href="#">香港</a></dd>
+                <dd><a href="#">日本</a></dd>
+                <dd><a href="#">韩国</a></dd>
+                <dd><a href="#">英国</a></dd>
+                <dd><a href="#">法国</a></dd>
+                <dd><a href="#">德国</a></dd>
+                <dd><a href="#">泰国</a></dd>
+                <dd><a href="#">印度</a></dd>
+                <dd><a href="#">意大利</a></dd>
+                <dd><a href="#">西班牙</a></dd>
+                <dd><a href="#">俄罗斯</a></dd>
+                <dd><a href="#">加拿大</a></dd>
+                <dd><a href="#">台湾</a></dd>
+                <dd><a href="#">巴西</a></dd>
+                <dd><a href="#">澳大利亚</a></dd>
+                <dd id='key2'></dd>
+            </dl>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function(){
+  //条件1 
+  $("#select1 dd").click(function () {
+    $(this).addClass("selected").siblings().removeClass("selected");
+    //add
+    if ($(this).hasClass("select-all")) {
+      $("#key1").html('');
+    } else {
+      $("#key1").html($(this).text()).hide();
+      }
+    get_data();//调用ajax函数获取json数据
+  });
+  
+  //条件二
+  $("#select2 dd").click(function () {
+    $(this).addClass("selected").siblings().removeClass("selected");
+    if ($(this).hasClass("select-all")) {
+      $("#key2").html('');
+    } else {
+      $("#key2").html($(this).text()).hide();
+      }
+    get_data();//调用ajax函数获取json数据
+    });
+});
+
+function get_data() {  
+    var key1=$("#key1").html();
+    var key2=$("#key2").html();
+    if (key1.length<1){
+            var obj=key2
+        }else if(key2.length<1){
+            var obj=key1
+        }else{
+            var obj=key1+','+key2
+        }   
+    var types=$("#types").html(); 
+
+    $('a').attr("href", "/type/?tags=" + obj + "," + types)
+ 
+}   
+</script>
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            {% autopaginate movies 10 %}
+            {% for movie in movies %}
+            <div class="col-md-12" style="margin-bottom: 20px; border: 1px solid; border-color: #28a745; padding-bottom: 5px">
+                <h2>{{movie.title}}</h2>
+                <p style="text-indent: 2em;"> {{movie.related_info}}</p>
+                <h4> 上映日期:{{movie.initialreleasedate}}</h4>
+                <h4 "> 电影评分:{{movie.score}}</h4>
+                <p><a class="btn btn-secondary" href="/subject/{{movie.id}}" role="button" style="float: right">详情 »</a></p>
+            </div>
+            {% endfor %}
+            {% paginate %}
+        </div>
+
+        <hr>
+
+    </div> <!-- /container -->
+
+</main>
